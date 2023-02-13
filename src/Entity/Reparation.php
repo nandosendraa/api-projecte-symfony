@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ReparationRepository::class)]
 #[ApiResource]
 #[ApiFilter(SearchFilter::class, properties: ['description' => 'partial'])]
+#[ApiFilter(SearchFilter::class, properties: ['status' => 'exact'])]
 #[ApiFilter(DateFilter::class, properties: ['date'])]
 class Reparation
 {
