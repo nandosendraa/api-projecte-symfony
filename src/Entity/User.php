@@ -20,46 +20,46 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new Get(),
         new GetCollection()
-    ]
+    ],
+    normalizationContext: ['groups' => ['user:read']],
+    denormalizationContext: ['groups' => ['user:write']]
 )]
 class User implements \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface, UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['reparation:read','user:read'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read', 'write'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 60)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read'])]
     private ?string $lastNames = null;
 
     #[ORM\Column(length: 60)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read'])]
     private ?string $profile = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read'])]
     private ?string $role = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Reparation::class, orphanRemoval: true)]
-    #[Groups(['read', 'write'])]
+    #[Groups(['user:read'])]
     private Collection $reparations;
 
     public function __construct()
