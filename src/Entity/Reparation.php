@@ -39,6 +39,7 @@ class Reparation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:read','reparation:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 40)]

@@ -29,6 +29,7 @@ class User implements \Symfony\Component\Security\Core\User\PasswordAuthenticate
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:read','reparation:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
