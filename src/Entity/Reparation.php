@@ -16,6 +16,7 @@ use ApiPlatform\Metadata\Put;
 use App\Repository\ReparationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ReparationRepository::class)]
 #[ApiResource(
@@ -26,7 +27,9 @@ use Doctrine\ORM\Mapping as ORM;
         new Put(),
         new Delete(),
         new Patch()
-    ]
+    ],
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['description' => 'partial'])]
 #[ApiFilter(SearchFilter::class, properties: ['status' => 'exact'])]
@@ -36,22 +39,28 @@ class Reparation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 40)]
+    #[Groups(['read', 'write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read', 'write'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 40)]
+    #[Groups(['read', 'write'])]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['read', 'write'])]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'reparations')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read', 'write'])]
     private ?User $owner = null;
 
     public function getId(): ?int

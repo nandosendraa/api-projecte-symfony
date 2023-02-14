@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @method string getUserIdentifier()
@@ -26,30 +27,39 @@ class User implements \Symfony\Component\Security\Core\User\PasswordAuthenticate
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
+    #[Groups(['read', 'write'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read', 'write'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
+    #[Groups(['read', 'write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 60)]
+    #[Groups(['read', 'write'])]
     private ?string $lastNames = null;
 
     #[ORM\Column(length: 60)]
+    #[Groups(['read', 'write'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read', 'write'])]
     private ?string $profile = null;
 
     #[ORM\Column(length: 40)]
+    #[Groups(['read', 'write'])]
     private ?string $role = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Reparation::class, orphanRemoval: true)]
+    #[Groups(['read', 'write'])]
     private Collection $reparations;
 
     public function __construct()
