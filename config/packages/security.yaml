@@ -36,7 +36,7 @@ security:
         - { path: ^/$, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         - { path: ^/login, roles: PUBLIC_ACCESS } # Allows accessing login controller
         - { path: ^/api$, roles: PUBLIC_ACCESS } # Allows accessing the doc
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY } # Forces authentication in all the requests
+        - { path: ^/, roles: PUBLIC_ACCESS } # Forces authentication in all the requests
 
 
 
