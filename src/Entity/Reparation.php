@@ -17,6 +17,7 @@ use App\Repository\ReparationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReparationRepository::class)]
 #[ApiResource(
@@ -44,23 +45,28 @@ class Reparation
 
     #[ORM\Column(length: 40)]
     #[Groups(['reparation:read', 'reparation:write','user:read'])]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['reparation:read', 'reparation:write'])]
+    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\Column(length: 40)]
     #[Groups(['reparation:read', 'reparation:write'])]
+    #[Assert\Choice(["reparacio", "llest", "diagnostic", "entregat"])]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups(['reparation:read', 'reparation:write'])]
+    #[Assert\NotBlank]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'reparations')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['reparation:read', 'reparation:write'])]
+    #[Assert\NotNull]
     private ?User $owner = null;
 
     public function getId(): ?int
