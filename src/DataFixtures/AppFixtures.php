@@ -20,8 +20,8 @@ class AppFixtures extends Fixture
     }
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('ES_es');
-
+        //$faker = Faker\Factory::create('ES_es');
+        $faker = Faker\Factory::create();
 
         $array = [
             ["user", "Usuari de prova", "user"],
@@ -41,6 +41,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setUsername($array[$i][0]);
             $user->setName($array[$i][1]);
+            $user->setProfile('default');
 
             $hashedPassword = $this->passwordHasher->hashPassword($user, $array[$i][2]);
             $user->setPassword($hashedPassword);
