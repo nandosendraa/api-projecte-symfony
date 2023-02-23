@@ -63,9 +63,13 @@ class User implements \Symfony\Component\Security\Core\User\PasswordAuthenticate
     #[Groups(['user:read'])]
     private Collection $reparations;
 
+    #[ORM\OneToMany(mappedBy: 'reparator', targetEntity: Reparation::class)]
+    private Collection $repairs;
+
     public function __construct()
     {
         $this->reparations = new ArrayCollection();
+        $this->repairs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -205,5 +209,35 @@ class User implements \Symfony\Component\Security\Core\User\PasswordAuthenticate
     public function __call(string $name, array $arguments)
     {
         // TODO: Implement @method string getUserIdentifier()
+    }
+
+    /**
+     * @return Collection<int, Reparation>
+     */
+    public function getRepairs(): Collection
+    {
+        return $this->repairs;
+    }
+
+    public function addRepair(Reparation $repair): self
+    {
+        if (!$this->repairs->contains($repair)) {
+            $this->repairs->add($repair);
+            $repair->setReparator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRepair(Reparation $repair): self
+    {
+        if ($this->repairs->removeElement($repair)) {
+            // set the owning side to null (unless already changed)
+            if ($repair->getReparator() === $this) {
+                $repair->setReparator(null);
+            }
+        }
+
+        return $this;
     }
 }

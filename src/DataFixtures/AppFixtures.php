@@ -24,9 +24,21 @@ class AppFixtures extends Fixture
         $faker = Faker\Factory::create();
 
         $array = [
-            ["user", "Usuari de prova", "user"],
-            ["admin", "Admnistrador", "admin"],
-            ["nando", "nando", "nando"]
+            ["user01", "user01", "user01"],
+            ["user02", "user02", "user02"],
+            ["treballador1", "treballador1", "treballador1"],
+            ["treballador2", "treballador2", "treballador2"],
+            ["administrador", "administrador", "administrador"]
+        ];
+
+        $normalUsers = [
+            ["user01", "user01", "user01"],
+            ["user02", "user02", "user02"]
+        ];
+
+        $workers = [
+            ["treballador1", "treballador1", "treballador1"],
+            ["treballador2", "treballador2", "treballador2"]
         ];
 
         $status = ['reparacio', 'llest', 'diagnostic', 'entregat'];
@@ -34,13 +46,15 @@ class AppFixtures extends Fixture
 
 
         $totalUsers = count($array);
+        $totalNormal = count($normalUsers);
+        $totalWorker = count($workers);
         $users = [];
 
 
-        for ($i=0; $i < $totalUsers; $i++) {
+        for ($i=0; $i < $totalNormal; $i++) {
             $user = new User();
-            $user->setUsername($array[$i][0]);
-            $user->setName($array[$i][1]);
+            $user->setUsername($normalUsers[$i][0]);
+            $user->setName($normalUsers[$i][1]);
             $user->setProfile('default');
 
             $hashedPassword = $this->passwordHasher->hashPassword($user, $array[$i][2]);
@@ -50,12 +64,42 @@ class AppFixtures extends Fixture
             $user->setEmail('prova'.$i.'@email.com');
             $user->setRole('ROLE_USER');
             $manager->persist($user);
-            $users[] = $user;
+            $userN[] = $user;
         }
+
+        for ($i=0; $i < $totalWorker; $i++) {
+            $user = new User();
+            $user->setUsername($workers[$i][0]);
+            $user->setName($workers[$i][1]);
+            $user->setProfile('default');
+
+            $hashedPassword = $this->passwordHasher->hashPassword($user, $array[$i][2]);
+            $user->setPassword($hashedPassword);
+
+            $user->setLastNames('a');
+            $user->setEmail('prova1'.$i.'@email.com');
+            $user->setRole('ROLE_USER');
+            $manager->persist($user);
+            $userW[] = $user;
+        }
+
+        $user = new User();
+        $user->setUsername('administrador');
+        $user->setName('administrador');
+        $user->setProfile('default');
+
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'administrador');
+        $user->setPassword($hashedPassword);
+
+        $user->setLastNames('a');
+        $user->setEmail('prova1'.$i.'@email.com');
+        $user->setRole('ROLE_ADMIN');
+        $manager->persist($user);
 
         for ($i=0; $i<30; $i++) {
             $reparation = new Reparation();
-            $reparation->setOwner($users[rand(0, $totalUsers-1)]);
+            $reparation->setOwner($userN[rand(0, $totalNormal-1)]);
+            $reparation->setReparator($userW[rand(0, $totalWorker-1)]);
             $reparation->setDescription($faker->text(250));
             $reparation->setName($faker->text(40));
             $reparation->setDate($faker->dateTimeInInterval('-1 year'));

@@ -69,6 +69,10 @@ class Reparation
     #[Assert\NotNull]
     private ?User $owner = null;
 
+    #[ORM\ManyToOne(inversedBy: 'repairs')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $reparator = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -130,6 +134,18 @@ class Reparation
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getReparator(): ?User
+    {
+        return $this->reparator;
+    }
+
+    public function setReparator(?User $reparator): self
+    {
+        $this->reparator = $reparator;
 
         return $this;
     }
