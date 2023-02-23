@@ -78,7 +78,7 @@ class AppFixtures extends Fixture
 
             $user->setLastNames('a');
             $user->setEmail('prova1'.$i.'@email.com');
-            $user->setRole('ROLE_USER');
+            $user->setRole('ROLE_WORKER');
             $manager->persist($user);
             $userW[] = $user;
         }
