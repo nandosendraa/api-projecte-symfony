@@ -49,17 +49,17 @@ class Reparation
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['reparation:read', 'reparation:write'])]
+    #[Groups(['reparation:read', 'reparation:write','user:read'])]
     #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\Column(length: 40)]
-    #[Groups(['reparation:read', 'reparation:write'])]
+    #[Groups(['reparation:read', 'reparation:write','user:read'])]
     #[Assert\Choice(["reparacio", "llest", "diagnostic", "entregat"])]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['reparation:read', 'reparation:write'])]
+    #[Groups(['reparation:read', 'reparation:write','user:read'])]
     #[Assert\NotBlank]
     private ?\DateTimeInterface $date = null;
 

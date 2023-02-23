@@ -64,6 +64,7 @@ class User implements \Symfony\Component\Security\Core\User\PasswordAuthenticate
     private Collection $reparations;
 
     #[ORM\OneToMany(mappedBy: 'reparator', targetEntity: Reparation::class)]
+    #[Groups(['user:read'])]
     private Collection $repairs;
 
     public function __construct()
