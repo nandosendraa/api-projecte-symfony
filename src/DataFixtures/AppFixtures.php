@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
             ["treballador2", "treballador2", "treballador2"]
         ];
 
-        $status = ['reparacio', 'llest', 'diagnostic', 'entregat'];
+        $status = ['EN REPARACIO', 'LLEST PER A ARREPLEGAR', 'EN DIAGNOSTIC', 'ENTREGAT'];
 
 
 
