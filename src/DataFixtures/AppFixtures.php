@@ -101,7 +101,7 @@ class AppFixtures extends Fixture
             $reparation->setOwner($userN[rand(0, $totalNormal-1)]);
             $reparation->setReparator($userW[rand(0, $totalWorker-1)]);
             $reparation->setDescription($faker->text(250));
-            $reparation->setName($faker->text(40));
+            $reparation->setName($faker->text(45));
             $reparation->setDate($faker->dateTimeInInterval('-1 year'));
             $reparation->setStatus($status[rand(0,count($status)-1)]);
             $manager->persist($reparation);
